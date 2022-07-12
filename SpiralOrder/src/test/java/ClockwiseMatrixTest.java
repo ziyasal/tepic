@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class SpiralOrderTest {
+public class ClockwiseMatrixTest {
     public static Stream<Arguments> simulationApproachProvider() {
         return Stream.of(
                 Arguments.of(new int[][]{{2, 3, 4, 8}, {5, 7, 9, 12}, {1, 0, 6, 10}}, "2, 3, 4, 8, 12, 10, 6, 0, 1, 5, 7, 9"),
