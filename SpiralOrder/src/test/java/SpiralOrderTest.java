@@ -1,22 +1,19 @@
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SpiralOrderTest {
-    @Test
-    void simulation_algorithm() {
-
-        final String expected = "2, 3, 4, 8, 12, 10, 6, 0, 1, 5, 7, 9";
-
-        int[][] matrix = {
-                {2, 3, 4, 8},
-                {5, 7, 9, 12},
-                {1, 0, 6, 10}
-        };
-
-        var actual = spiralOrder(matrix);
-
-        assertEquals(expected, actual);
+    public static Stream<Arguments> simulationApproachProvider() {
+        return Stream.of(
+                Arguments.of(new int[][]{{2, 3, 4, 8}, {5, 7, 9, 12}, {1, 0, 6, 10}}, "2, 3, 4, 8, 12, 10, 6, 0, 1, 5, 7, 9"),
+                Arguments.of(new int[][]{{2}, {5}, {1}}, "2, 5, 1"),
+                Arguments.of(new int[][]{{2, 3, 4, 8}}, "2, 3, 4, 8"),
+                Arguments.of(new int[][]{{2}}, "2"));
     }
 
     /*
@@ -27,9 +24,8 @@ public class SpiralOrderTest {
 
     => Auxiliary Space: O(N), the information stored in seen array and in result StringBuilder (space complexity is O(n)).
      */
-    public static String spiralOrder(int[][] matrix) {
-        if (matrix.length == 0)
-            return "";
+    public static String clockwiseMatrix(int[][] matrix) {
+        if (matrix.length == 0) return "";
 
         var result = new StringBuilder();
 
@@ -54,11 +50,7 @@ public class SpiralOrderTest {
             int currentRow = seenX + directionRows[direction];
             int currentColumn = seenY + directionColumns[direction];
 
-            if (0 <= currentRow
-                    && currentRow < rowsLen
-                    && 0 <= currentColumn
-                    && currentColumn < columnsLen
-                    && !seen[currentRow][currentColumn]) {
+            if (0 <= currentRow && currentRow < rowsLen && 0 <= currentColumn && currentColumn < columnsLen && !seen[currentRow][currentColumn]) {
                 seenX = currentRow;
                 seenY = currentColumn;
             } else {
@@ -69,5 +61,19 @@ public class SpiralOrderTest {
         }
 
         return result.toString();
+    }
+
+    @DisplayName("Should build a string with the entries of given matrix appended in clockwise order")
+    @ParameterizedTest(name = "{index} => matrix={0}, expected={1}")
+    @MethodSource("simulationApproachProvider")
+    void simulationApproach(int[][] matrix, String expected) {
+
+        var actual = clockwiseMatrix(matrix);
+
+        assertEquals(expected, actual);
+
+        System.out.println(expected);
+        System.out.println(actual);
+        System.out.println("=======");
     }
 }
