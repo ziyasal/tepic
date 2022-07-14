@@ -2,24 +2,52 @@
 
 ## REST API SPEC
 
+### Discussion points:
+
+> This points will be included in the high-level graphical design below.
+
+-  Title distinction if multiple titles are developed on the complete backend platform for live games with managed game services, real-time analytics, and LiveOps. This could change the design to consider "Game Titles" by including them in the API domain to target them.
+
+Since we are focsing on the sinle Title at the moment, I will go with having one title.
+
+- Sharding 
+Data could be sharded by platform, platform-region, or just region this would help to scale better and access to relevant data faster.  
+
+I will go with having shard information on the URL since it easily allows routing on L7 with a few routing policies by using NGINX module or Envoy filter.
+
+__Shard by Platform__
+
+Samples:
+`api.jorneytoepic.com/shards/steam/....`
+`api.jorneytoepic.com/shards/xbox/....`
+`api.jorneytoepic.com/shards/psn/....`
+`api.jorneytoepic.com/shards/stadia/....`
+
+__Shard by Platform-Region__
+
+Samples:
+`api.jorneytoepic.com/shards/steam-eu/....`
+`api.jorneytoepic.com/shards/xbox-as/....`
+`api.jorneytoepic.com/shards/psn-de/....`
+`api.jorneytoepic.com/shards/stadia-de/....`
+
+
 ### ACCOUNT INFORMATION
 ```
-# HTTP
 GET id/v1/accounts/{id}
 HOST api.journeytoepic.com
 ```
 
 #### REQUEST HEADERS
-| Name           | Required | Type   | Description             |
-|----------------|----------|--------|-------------------------|
-| Authorization  | true     | string | Bearer [JSON Web Token] |
-| Content-Type:  | true     | string | application/json        |                                                                       
+| Name            | Required | Type   | Description                                  |
+|-----------------|----------|--------|----------------------------------------------|
+| Authorization   | true     | string | Bearer [JSON Web Token]                      |
+| Content-Type:   | true     | string | application/json                             |
+| Accept-Encoding | optional | string | Specifies how server will compress responses |                                                                        
 
 #### REQUEST
-__GameModeRequest__
-| Name           | Type    | Description                                                                                        |
-|----------------|---------|----------------------------------------------------------------------------------------------------|
-| BuildVersion   | string  | previously uploaded build version for which game modes are being requested                         |
+N/A
+
 
 #### RESPONSES
 
@@ -29,8 +57,8 @@ __AccountInfo__
 | Name              | Type    | Description                                                                                        |
 |-------------------|---------|----------------------------------------------------------------------------------------------------|
 | accountId         | string  | Universally Unique Identifier (UUID)                                                               |
-| displayName       | string  |                                                                                                    |
-| preferredLanguage | number  |                                                                                                    |
+| displayName       | string  | User's name shown on the UI                                                                        |
+| preferredLanguage | string  | Usee's preferred language                                                                          |
 | region            | string  | two-letter country codes (ISO 3166)                                                                |
 
 - `400 Bad Request`
@@ -40,14 +68,16 @@ __AccountInfo__
 
 ```
 GET shards/{platform-region}/gamemodes/v1/popular
-Host: api.journeytoepic.com
+Host: api.{titleID}.journeytoepic.com
 Content-Type: application/json
 ```
 
 #### REQUEST HEADERS
-| Name           | Required | Type   | Description             |
-|----------------|----------|--------|-------------------------|
-| Authorization  | true     | string | Bearer [JSON Web Token] |
+| Name           | Required | Type   | Description                                   |
+|----------------|----------|--------|-----------------------------------------------|
+| Authorization  | true     | string | Bearer [JSON Web Token]                       |
+| Content-Type:   | true     | string | application/json                             |
+| Accept-Encoding | optional | string | Specifies how server will compress responses |  
 
 #### REQUEST
 __GameModeRequest__
@@ -114,25 +144,15 @@ __GameModeInfo__
 
 ## PERSITENCE LAYER
 
-### SHARDING OPTIONS
+### SHARDING
 
-__Shard by Platform__
 
-Samples:
-`api.jorneytoepic.com/v1/shards/steam/....`
-`api.jorneytoepic.com/v1/shards/xbox/....`
-`api.jorneytoepic.com/v1/shards/psn/....`
-
-__Shard by Platform-Region__
-
-Samples:
-`api.jorneytoepic.com/v1/shards/steam-eu/....`
-`api.jorneytoepic.com/v1/shards/xbox-as/....`
-`api.jorneytoepic.com/v1/shards/psn-de/....`
 
 ### Accessing to sharded data
 
-#### Routing by extracting shard information from the URL
+When accessing the sharded data below options would be considered, each has its own pros and cons.
+
+!TODO: pros cons table and preferred approach
 
 - __NGINX module,  ENVOY filter or Custom Routing Layer__
 This would be an option to locate relevent shards where servers and user data is located.
@@ -143,3 +163,8 @@ This option allows for accessing sharded data from right in the code.
 
 ### Caching
 TODO
+
+
+## HIGH LEVEL DESIGN
+
+![](/RestAPI/high-level-design.png)
