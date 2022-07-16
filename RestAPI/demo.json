@@ -1,0 +1,26 @@
+{
+    "meta": {
+        "page": {
+            "total": 50
+        }
+    },
+    "relationships": {},
+    "links": {
+        "prev": "{titleId}/game/v1/gamemodes?sort=popularity&page[before]={before_cursor_here}&page[size]=10",
+        "next": "{titleId}/game/v1/gamemodes?sort=popularity&page[after]={before_cursor_here}&page[size]=10"
+    },
+    "data": [
+        {
+            "type": "gameMode",
+            "id": "ID_HERE",
+            "attributes": {
+                "id": "ID_HERE",
+                "created": "",
+                "displayName": "bug the system",
+                "preferredLanguage": "en",
+                "country": "de",
+                "continent": "eu"
+            }
+        }
+    ]
+}
