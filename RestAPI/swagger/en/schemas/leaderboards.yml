@@ -1,0 +1,115 @@
+title: Leaderboard Object
+description: "Leaderboard objects show the current rank of the top 500 players for a game mode."
+type: object
+properties:
+  type:
+    type: string
+    description: Identifier for this object type ("leaderboard")
+  id:
+    type: string
+    description: "A randomly generated ID assigned to this resource object for linking elsewhere in the leaderboard response"
+  attributes:
+    type: object
+    properties:
+      shardId:
+        type: string
+        description: "the shard ID"
+      gameMode:
+        type: string
+        description: "The game mode"
+      seasonId:
+        type: string
+        description: "The season ID"
+  relationships:
+    type: object
+    properties:
+      players:
+        type: object
+        properties:
+          data:
+            type: array
+            items:
+              type: object
+              properties:
+                type:
+                  type: string
+                  description: Identifier for this object type ("player")
+                id:
+                  type: string
+                  description: "The accountId of the player"
+  included:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Identifier for this object type ("player")
+        id:
+          type: string
+          description: "The accountId of the player"
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              description: "The player's IGN"
+            rank:
+              type: integer
+              description: "The player's current rank"
+            stats:
+              type: object
+              description: "Player stats in the context of a season"
+              properties:
+                rankPoints:
+                  type: number
+                  description: "Number of rank points the player was awarded."
+                wins:
+                  type: integer
+                  description: "Number of matches won"
+                  minimum: 0
+                games:
+                  type: integer
+                  description: "Number of games played"
+                  minimum: 0
+                winRatio:
+                  type: number
+                  description: "Win ratio"
+                  minimum: 0
+                  deprecated: true
+                averageDamage:
+                  type: integer
+                  description: "Average amount of damage dealt per match"
+                  minimum: 0
+                kills:
+                  type: integer
+                  description: "Number of enemy players killed"
+                  minimum: 0
+                killDeathRatio:
+                  type: number
+                  description: "Kill death ratio"
+                  minimum: 0
+                  deprecated: true
+                kda:
+                  type: number
+                  description: "Kill death assist ratio"
+                  minimum: 0
+                averageRank:
+                  type: number
+                  description: "Average rank"
+                  minimum: 0
+                tier:
+                  type: string
+                  description: "Player's tier"
+                subTier:
+                  type: string
+                  description: "Player's subtier"
+  links:
+    type: object
+    properties:
+      self:
+        type: string
+        description: "Link to this object"
+  meta:
+    type: object
+    description: "N/A"

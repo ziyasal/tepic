@@ -1,0 +1,35 @@
+openapi: 3.0.0
+
+info:
+  version: 1.0.0
+  title: ""
+  description: "Note: Sample rates are independent for each platform and not uniform across any time interval."
+
+servers:
+  - url: https://api.pubg.com/shards/{platform}
+    variables:
+      "platform":
+        enum:
+        - "steam"
+        - "console"
+        - "kakao"
+        default: steam
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /samples:
+    $ref: './paths/index.yml#/samples'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      description: "Enter your API key here to be used with the interactive documentation!"
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    sample:
+      $ref: 'schemas/index.yml#/sample'

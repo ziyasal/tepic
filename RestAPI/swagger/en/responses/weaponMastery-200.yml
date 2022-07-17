@@ -1,0 +1,29 @@
+description: "weapon mastery response"
+content:
+  application/vnd.api+json:
+    schema:
+      type: object
+      properties:
+        accountId:
+          type: string
+          description: "Player ID (also known as account ID)"
+        attributes:
+          type: object
+          properties:
+            platform:
+              type: string
+              description: "The platform"
+            weaponSummaries:
+              $ref: '../schemas/index.yml#/weaponSummary'
+            latestMatchId:
+              type: string
+              description: "The match ID of the last completed match that was played"
+        links:
+          type: object
+          properties:
+            self:
+              type: string
+              description: "Link to this object"
+        meta:
+          type: object
+          description: "N/A"

@@ -1,25 +1,43 @@
 {
-    "meta": {
-        "page": {
-            "total": 50
+    "links": {
+        "self": "/{titleId}/id/v1/accounts/{accountId}?include=titlePlayerProfiles"
+    },
+    "data": {
+        "type": "gameMode",
+        "id": "{accountId}",
+        "attributes": {
+            "displayName": "Bug the System",
+            "preferredLanguage": "en",
+            "countryCode": "de",
+            "continentCode": "eu",
+            "linkedAccounts": ["omitted"]
+        },
+        "relationships": {
+            "titlePlayerProfiles": {
+                "links": {
+                    "self": "/{titleId}/id/v1/accounts/{accountId}/relationships/titlePlayerProfiles",
+                    "related": "/{titleId}/id/v1/accounts/{accountId}/titlePlayerProfiles"
+                },
+                "data": [
+                    {
+                        "type": "titlePlayerProfile",
+                        "id": "1"
+                    }
+                ]
+            }
         }
     },
-    "relationships": {},
-    "links": {
-        "prev": "{titleId}/game/v1/gamemodes?sort=popularity&page[before]={before_cursor_here}&page[size]=10",
-        "next": "{titleId}/game/v1/gamemodes?sort=popularity&page[after]={before_cursor_here}&page[size]=10"
-    },
-    "data": [
+    "included": [
         {
-            "type": "gameMode",
-            "id": "ID_HERE",
+            "type": "titlePlayerProfile",
+            "id": "1",
             "attributes": {
-                "id": "ID_HERE",
-                "created": "",
-                "displayName": "bug the system",
-                "preferredLanguage": "en",
-                "country": "de",
-                "continent": "eu"
+                "titleId": "{titleId}",
+                "currentGameMode": "squad",
+                "avatarUrl": "https://example.com/avatar-simple"
+            },
+            "links": {
+                "self": "/titlePlayerProfiles/1"
             }
         }
     ]

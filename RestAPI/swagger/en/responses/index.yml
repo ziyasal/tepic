@@ -1,0 +1,60 @@
+errors:
+  notFound:
+    $ref: './notFound.yml'
+
+  unauthorized:
+    $ref: './unauthorized.yml'
+
+  unsupportedMediaType:
+    $ref: './unsupportedMediaType.yml'
+
+  tooManyRequests:
+    $ref: './tooManyRequests.yml'
+
+batchLifetime-200:
+  $ref: './batchLifetime-200.yml'
+
+batchPlayerSeason-200:
+  $ref: './batchPlayerSeason-200.yml'
+
+leaderboards-200:
+  $ref: './leaderboards-200.yml'
+
+lifetime-200:
+  $ref: './lifetime-200.yml'
+
+match-200:
+  $ref: './match-200.yml'
+
+player-200:
+  $ref: './player-200.yml'
+
+players-200:
+  $ref: './players-200.yml'
+
+samples-200:
+  $ref: './samples-200.yml'
+
+playerSeason-200:
+  $ref: './playerSeason-200.yml'
+
+rankedstats-200:
+  $ref: './rankedstats-200.yml'
+
+seasons-200:
+  $ref: './seasons-200.yml'
+
+status-200:
+  $ref: './status-200.yml'
+
+survivalMastery-200:
+  $ref: './survivalMastery-200.yml'
+
+tournaments-200:
+  $ref: './tournaments-200.yml'
+
+tournamentList-200:
+  $ref: './tournamentList-200.yml'
+
+weaponMastery-200:
+  $ref: './weaponMastery-200.yml'

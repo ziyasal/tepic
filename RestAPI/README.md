@@ -87,61 +87,92 @@ Example content type string:  `Accept: application/vnd.api+json`
 
  ℹ️ I would go with cursor based since its enables to get accurate pages and avoid cases like "if an item from a prior page is deleted while the client is paginating, all subsequent results will be shifted forward by one".
 
-### ACCOUNT INFORMATION
-
-__Option 1)__
-```
-# It enables fetching multiple accounts if accountIds passed as comma seperated
-# Page size parameter is optional, it uses default one if not specified.
-
-POST  {titleId}/id/v1/accounts?filter[accountIds]={accountId}&page[size]=20
-HOST api.journeytoepic.com
-```
-
-__Option 2)__
-
-```
-POST  {titleId}/id/v1/accounts/{accountId}
-HOST api.journeytoepic.com
-```
-
-#### REQUEST HEADERS
+### REQUEST HEADERS
 | Name            | Required | Type   | Description                                           |
 |-----------------|----------|--------|-------------------------------------------------------|
 | Authorization   | true     | string | Bearer [JSON Web Token]                               |
-| Accept-Encoding | optional | string | Specifies how server will compress responses, ie gzip |
-| Accept          | true     | string | application/vnd.api+json                              |                                                 
+| Accept          | true     | string | application/vnd.api+json                              |
+| Accept-Encoding | false    | string | Specifies how server will compress responses, ie gzip |  
 
-#### REQUEST
-N/A
+### ACCOUNT INFORMATION
 
+__Option 1) Filtering accounts by Account IDs:__
+```
+# NOTES:
+# It enables fetching multiple accounts if accountIds passed as comma seperated
+# Page size parameter "page[size]=20" is optional, it default page size set on the server if not specified
+
+POST  /id/v1/accounts?filter[accountIds]={accountId} HTTP/1.1
+HOST api.journeytoepic.com
+Accept: application/vnd.api+json
+Authorization: Bearer $API_KEY_HERE
+```
+
+__Option 2) Getting account by Account ID:__
+
+```
+POST  /id/v1/accounts/{accountId} HTTP/1.1
+HOST api.journeytoepic.com
+Accept: application/vnd.api+json
+Authorization: Bearer $API_KEY_HERE
+
+```
+
+#### REQUEST PARAMETERS
+
+ TODO===
 
 #### RESPONSES
 
 - `200 OK`
 __AccountInfo__
 
+> Only relevant fields included the rest is omitted. 
+
+| Name              | Type     | Description                                                                                        |
+|-------------------|----------|----------------------------------------------------------------------------------------------------|
+| id                | string   | Universally Unique Identifier (UUID)                                                               |
+| displayName       | string   | User's name shown on the UI                                                                        |
+| preferredLanguage | string   | Usee's preferred language                                                                          |
+| countryCode       | string   | two-letter country codes (ISO 3166)                                                                |
+| continentCode     | string   | two-letter continent code                                                                          |
+| created           | string   | UTC Datetime string  with timezone                                                                 |
+| linkedAccounts    | []       | omitted                                                                                            |
+
+
+
+Since we would like to get game mode with user account as well, then response payload will be a "compound object" that includes titlePlayerProfiles that associated with the uiser account.
+
+__TitlePlayerProfile__
+
+> Only relevant fields included the rest is omitted. 
+
 | Name              | Type    | Description                                                                                        |
 |-------------------|---------|----------------------------------------------------------------------------------------------------|
-| accountId         | string  | Universally Unique Identifier (UUID)                                                               |
-| displayName       | string  | User's name shown on the UI                                                                        |
-| preferredLanguage | string  | Usee's preferred language                                                                          |
-| country           | string  | two-letter country codes (ISO 3166)                                                                |
-| continent         | string  | two-letter continent code                                                                          |
+| id                | string  | Universally Unique Identifier (UUID)                                                               |
+| titleId           | string  | User's name shown on the UI                                                                        |
+| currentGameMode   | string  | Usee's preferred language                                                                          |
 
 
-__Response for "Option 1":__
+__Response for "Option 1 — Filtering accounts by Account IDs":__
+
+For a single account example response document looks like below:
+
 ```json
 {
     "meta": {
         "page": {
-            "total": 50
+            "per-page": 10,
+            "from": "before_cursor",
+            "to": "after_cursor",
+            "has-more": false
         }
     },
     "relationships": {},
     "links": {
-        "prev": "{titleId}/game/v1/gamemodes?sort=popularity&page[before]={before_cursor_here}&page[size]=10",
-        "next": "{titleId}/game/v1/gamemodes?sort=popularity&page[after]={before_cursor_here}&page[size]=10"
+        "first": "/id/v1/accounts?filter[accountIds]={accountId}",
+        "prev": "/id/v1/accounts?filter[accountIds]={accountId}&page[before]={before_cursor}",
+        "next": ""
     },
     "data": [
         {
@@ -152,29 +183,86 @@ __Response for "Option 1":__
                 "created": "",
                 "displayName": "bug the system",
                 "preferredLanguage": "en",
-                "country": "de",
-                "continent": "eu"
+                "countryCode": "de",
+                "continentCode": "eu"
+            },
+            "relationships": {
+                "titlePlayerProfiles": {
+                    "links": {
+                        "self": "/{titleId}/id/v1/accounts/{accountId}/relationships/titlePlayerProfiles",
+                        "related": "/{titleId}/id/v1/accounts/{accountId}/titlePlayerProfiles"
+                    },
+                    "data": [
+                        {
+                            "type": "titlePlayerProfile",
+                            "id": "1"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "included": [
+        {
+            "type": "titlePlayerProfile",
+            "id": "1",
+            "attributes": {
+                "titleId": "{titleId}",
+                "currentGameMode": "squad",
+            },
+            "links": {
+                "self": "/titlePlayerProfiles/1"
             }
         }
     ]
 }
 ```
 
-__Response for "Option 2":__
+__Response for "Option 2" — Getting account by Account ID:__
+Response is a “compound document” which includes playrProfile in the response as well:
 ```json
 {
+    "links": {
+        "self": "/{titleId}/id/v1/accounts/{accountId}?include=titlePlayerProfiles"
+    },
     "data": {
         "type": "gameMode",
-        "id": "ID_HERE",
+        "id": "{accountId}",
         "attributes": {
-            "id": "ID_HERE",
-            "acountId": "ACCOUNT_ID_HERE",
-            "displayName": "bugthesystem",
+            "displayName": "Bug the System",
             "preferredLanguage": "en",
-            "country": "de",
-            "continent": "eu"
+            "countryCode": "de",
+            "continentCode": "eu",
+            "linkedAccounts": ["omitted"]
+        },
+        "relationships": {
+            "titlePlayerProfiles": {
+                "links": {
+                    "self": "/{titleId}/id/v1/accounts/{accountId}/relationships/titlePlayerProfiles",
+                    "related": "/{titleId}/id/v1/accounts/{accountId}/titlePlayerProfiles"
+                },
+                "data": [
+                    {
+                        "type": "titlePlayerProfile",
+                        "id": "1"
+                    }
+                ]
+            }
         }
-    }
+    },
+    "included": [
+        {
+            "type": "titlePlayerProfile",
+            "id": "1",
+            "attributes": {
+                "titleId": "{titleId}",
+                "currentGameMode": "squad",
+            },
+            "links": {
+                "self": "/titlePlayerProfiles/1"
+            }
+        }
+    ]
 }
 ```
 
@@ -187,30 +275,29 @@ __Response for "Option 2":__
 > Game mode should depend on something else?
 
 ```
-GET {titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&page[size]=20
+# NOTES:
+# To sort in descending order "sort=-rank" could be passed, without minus (U+002D HYPEN-MINUS "-") sort happens in ascending order
+# # Page size parameter "page[size]=20" is optional, it default page size set on the server if not specified
+
+GET {titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&buildVersion={buildVersion}
 Host: api.journeytoepic.com
-Accept: application/vnd.api+json                              |   
+Accept: application/vnd.api+json
+Authorization: Bearer $API_KEY_HERE
 ```
 
-#### REQUEST HEADERS
-| Name            | Required | Type   | Description                                           |
-|-----------------|----------|--------|-------------------------------------------------------|
-| Authorization   | true     | string | Bearer [JSON Web Token]                               |
-| Accept          | true     | string | application/vnd.api+json                              |
-| Accept-Encoding | optional | string | Specifies how server will compress responses, ie gzip |  
-
 #### REQUEST
-__GameModeRequest__
+PARAMETETERS
+
 | Name           | Type    | Description                                                                                        |
 |----------------|---------|----------------------------------------------------------------------------------------------------|
 | BuildVersion   | string  | previously uploaded build version for which game modes are being requested                         |
-| Platform       | string  | previously uploaded build version for which game modes are being requested                         |
-| Country        | string  | previously uploaded build version for which game modes are being requested                         |
-| ServerRegion   | string  | previously uploaded build version for which game modes are being requested                         |
+| Platform       | string  | platform where player plays on                                                                        |
+| Region         | string  | players region represented as two-letter country codes (ISO 3166)                                  |
+| Sort           | string  | to sort resorce collections according to one or more criteria ("sort fields")                      |
 
 
 #### RESPONSES
-- `200 OK`
+
 __GameModeInfo__
 
 | Name           | Type    | Description                                                                                        |
@@ -219,46 +306,92 @@ __GameModeInfo__
 | MaxPlayerCount | number  | maximum user count a specific Game Server Instance can support                                     |
 | MinPlayerCount | number  | minimum user count required for this Game Server Instance to continue (usually 1)                  |
 | StartOpen      | boolean | whether to start as an open session, meaning that players can matchmake into it (defaults to true) |
+| Description    | string  |                                                                                                    |
+| Created        | string  | UTC Datetime string  with timezone                                                                 |
 
-Response contains links to `prev` and the `next` pages.
+Response contains links to `prev` and the `next` pages. 
+`prev` will be empty for the initial response and `self` contains the link that generated the current response document.
 
 ```json
 {
     "meta": {
-            "page": { "total": 50 }
-        },
-    "relationships":{}
-    "links" : {
-            "prev" : "{titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&page[before]={before_cursor_here}&page[size]=20",
-            "next" : "{titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&page[before]={after_cursor_here}&page[size]=20"
+        "page": {
+            "total": 100
+        }
     },
-     "data": [{
-             "type": "gameMode",
-             "id": "ID_HERE",
-             "attributes":{
-                 "id": "ID_HERE",
-                 "createdAt":"",
-                 "name": "solo",
-                 "maxPlayerCount": 50,
-                 "minPlayerCount": 1,
-                 "startOpen": true
-             }
-
-        }],
-    
+    //
+    "relationships": {},
+    "links": {
+        "self": "/{titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&buildVersion={buildVersion}",
+        "first": "link to the first document",
+        "last": "link to the last document",
+        "prev": "/{titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&page[before]={before_cursor}&buildVersion={buildVersion}",
+        "next": "/{titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&page[after]={after_cursor}&buildVersion={buildVersion}"
+    },
+    "data": [
+        {
+            "type": "gameMode",
+            "id": "ID_HERE",
+            "attributes": {
+                "id": "ID_HERE",
+                "created": "",
+                "name": "solo",
+                "description": "Single player discovery mode",
+                "maxPlayerCount": 50,
+                "minPlayerCount": 1,
+                "startOpen": true
+            }
+        }
+    ]
 }
 ```
 
 #### ERROR CASES
 
-- `400 Bad Request`
+- Invalid Parameter
 
+__Page Size:__
 ```json
 {
   "errors": [{
     "title": "Invalid Parameter.",
     "detail": "page[size] must be a positive integer; got 0",
     "source": { "parameter": "page[size]" },
+    "status": "400"
+  }]
+}
+```
+
+__Region:__
+```json
+{
+  "errors": [{
+    "title": "Invalid Parameter.",
+    "detail": "Region must be two-letter country code (ISO 3166); got USA",
+    "source": { "parameter": "region" },
+    "status": "400"
+  }]
+}
+```
+
+__Platform:__
+```json
+{
+  "errors": [{
+    "title": "Invalid Parameter.",
+    "detail": "Platform must be a valid one (ie: psn, xbox, stadia, ); got USA",
+    "source": { "parameter": "platform" },
+    "status": "400"
+  }]
+}
+
+__Sort:__
+```json
+{
+  "errors": [{
+    "title": "Invalid Parameter.",
+    "detail": "Sort value must be a valid field; got QWERTY",
+    "source": { "parameter": "sort" },
     "status": "400"
   }]
 }

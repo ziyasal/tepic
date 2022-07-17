@@ -1,0 +1,47 @@
+batchLifetime:
+  $ref: './batchLifetime.yml'
+  
+batchPlayerSeason:
+  $ref: './batchPlayerSeason.yml'
+
+leaderboards:
+  $ref: './leaderboards.yml'
+
+lifetime:
+  $ref: './lifetime.yml'
+
+match:
+  $ref: './match.yml'
+
+player: 
+  $ref: './player.yml'
+
+players: 
+  $ref: './players.yml'
+
+playerSeason:
+  $ref: './playerSeason.yml'
+
+rankedstats:
+  $ref: './rankedstats.yml'
+
+samples:
+  $ref: './samples.yml'
+  
+seasons:
+  $ref: './seasons.yml'
+
+status:
+  $ref: './status.yml'
+
+survivalMastery:
+  $ref: './survivalMastery.yml'
+
+tournamentList:
+  $ref: './tournamentList.yml'
+
+tournaments:
+  $ref: './tournaments.yml'
+
+weaponMastery:
+  $ref: './weaponMastery.yml'

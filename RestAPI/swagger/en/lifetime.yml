@@ -1,0 +1,41 @@
+openapi: 3.0.0
+
+info:
+  version: 1.0.0
+  title: ""
+  description: ""
+servers:
+  - url: https://api.pubg.com/shards/{platform}
+    variables:
+      "platform":
+        enum:
+        - "kakao"
+        - "psn"
+        - "stadia"
+        - "steam"
+        - "xbox"
+        default: steam
+
+security:
+  - ApiKeyAuth: []
+
+paths:
+  /players/{accountId}/seasons/lifetime:
+    $ref: './paths/index.yml#/lifetime'
+
+  /seasons/lifetime/gameMode/{gameMode}/players:
+    $ref: './paths/index.yml#/batchLifetime'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: http
+      description: "Enter your API key here to be used with the interactive documentation!"
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    gameModeStats:
+      $ref: 'schemas/index.yml#/gameModeStats'
+    matchList:
+      $ref: 'schemas/index.yml#/matchList'

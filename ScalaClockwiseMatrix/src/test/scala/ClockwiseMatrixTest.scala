@@ -9,16 +9,17 @@ class ClockwiseMatrixTest extends AnyFlatSpec with Matchers {
     val expected = ""
     val testCase = Array.ofDim[Int](0, 0)
 
-    val actual = Algorithm.clockwiseMatrix(testCase)
+    val actual = MatrixUtils.printClockwise(testCase)
 
     assert(actual == expected)
   }
+
 
   "A matrix with single row and single column with single element" should "should print the single element in the string" in {
     val expected = "2"
     val testCase = Array(Array(2))
 
-    val actual = Algorithm.clockwiseMatrix(testCase)
+    val actual = MatrixUtils.printClockwise(testCase)
 
     assert(actual == expected)
   }
@@ -27,7 +28,7 @@ class ClockwiseMatrixTest extends AnyFlatSpec with Matchers {
     val expected = "2, 3, 4, 8"
     val testCase = Array(Array(2, 3, 4, 8))
 
-    val actual = Algorithm.clockwiseMatrix(testCase)
+    val actual = MatrixUtils.printClockwise(testCase)
 
     assert(actual == expected)
   }
@@ -40,7 +41,7 @@ class ClockwiseMatrixTest extends AnyFlatSpec with Matchers {
       Array(1)
     )
 
-    val actual = Algorithm.clockwiseMatrix(testCase)
+    val actual = MatrixUtils.printClockwise(testCase)
 
     assert(actual == expected)
   }
@@ -53,7 +54,7 @@ class ClockwiseMatrixTest extends AnyFlatSpec with Matchers {
       Array(1, 0, 6, 10)
     )
 
-    val actual = Algorithm.clockwiseMatrix(testCase)
+    val actual = MatrixUtils.printClockwise(testCase)
 
     assert(actual == expected)
   }

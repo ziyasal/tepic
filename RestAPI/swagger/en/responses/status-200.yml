@@ -1,0 +1,15 @@
+description: Status OK
+content:
+  application/vnd.api+json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            type:
+              type: string
+              format: "status"
+            id:
+              type: string
+              format: "pubg-api"

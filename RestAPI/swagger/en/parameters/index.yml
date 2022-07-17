@@ -1,0 +1,26 @@
+accountId:
+  $ref: './accountId.yml'
+
+filterCreatedAt-start:
+  $ref: './filterCreatedAt-start.yml'
+
+filterGamepad:
+  $ref: './filterGamepad.yml'
+
+filterPlayerIds:
+  $ref: './filterPlayerIds.yml'
+
+filterPlayerNames:
+  $ref: './filterPlayerNames.yml'
+
+gameMode:
+  $ref: './gameMode.yml'
+
+id:
+  $ref: './id.yml'
+
+pageNumber:
+  $ref: './pageNumber.yml'
+
+seasonId:
+  $ref: './seasonId.yml'
