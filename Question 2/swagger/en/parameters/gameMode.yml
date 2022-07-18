@@ -6,8 +6,6 @@ schema:
   type: string
   enum:
     - "duo"
-    - "duo-fpp"
     - "solo"
-    - "solo-fpp"
     - "squad"
-    - "squad-fpp"
+    - "omitted for brevity"
