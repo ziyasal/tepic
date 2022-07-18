@@ -22,7 +22,6 @@ object MatrixUtils {
 
   // !!! This is my initial implementation, please see an IMPROVED version below.
   def printClockwiseInitial(matrix: Array[Array[Int]]): String = {
-
     val rowsLen = matrix.length
     if (rowsLen == 0) return ""
     val columnsLen = matrix(0).length
