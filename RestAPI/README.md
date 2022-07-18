@@ -157,8 +157,9 @@ __AccountInfo__
 | preferredLanguage | string   | Usee's preferred language                                                                          |
 | countryCode       | string   | two-letter country codes (ISO 3166)                                                                |
 | continentCode     | string   | two-letter continent code                                                                          |
-| created           | string   | UTC (Coordinated Universal Time) datetime                                                          |
 | linkedAccounts    | []       | "omitted"                                                                                          |
+
+> More fields are omitted for brevity
 
 
 
@@ -191,7 +192,7 @@ Response is a “compound document” which includes titlePlayerProfile in the r
     "links": {
         "first": "/id/v1/accounts?filter[accountIds]={accountId}",
         "prev": "/id/v1/accounts?filter[accountIds]={accountId}&page[before]={before_cursor}",
-        "next": ""
+        "next": "",
     },
     "data": [
         {
@@ -199,7 +200,6 @@ Response is a “compound document” which includes titlePlayerProfile in the r
             "id": "ID_HERE",
             "attributes": {
                 "id": "ID_HERE",
-                "created": "",
                 "displayName": "bug the system",
                 "preferredLanguage": "en",
                 "countryCode": "de",
@@ -226,7 +226,9 @@ Response is a “compound document” which includes titlePlayerProfile in the r
             "type": "titlePlayerProfile",
             "id": "1",
             "attributes": {
+                "name": "name here",
                 "titleId": "{titleId}",
+                "buildVersion": "holds build version of the game that the profile is associated",
                 "currentGameMode": "squad",
             },
             "links": {
@@ -300,7 +302,7 @@ Response is a “compound document” which includes titlePlayerProfile in the r
 # To sort in descending order "sort=-rank" could be passed, without minus (U+002D HYPEN-MINUS "-") sort happens in ascending order
 # # Page size parameter "page[size]=20" is optional, it default page size set on the server if not specified
 
-GET {titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&buildVersion={buildVersion}
+GET /game/v1/gamemodes?sort=rank&platform={platform}&region={region}&titleId={titleId}&buildVersion={buildVersion}
 Host: api.journeytoepic.com
 Accept: application/vnd.api+json
 Authorization: Bearer $API_KEY_HERE
@@ -311,10 +313,11 @@ PARAMETETERS
 
 | Name           | Type    | Description                                                                                        |
 |----------------|---------|----------------------------------------------------------------------------------------------------|
-| BuildVersion   | string  | previously uploaded build version for which game modes are being requested                         |
-| Platform       | string  | platform where player plays on                                                                        |
-| Region         | string  | players region represented as two-letter country codes (ISO 3166)                                  |
-| Sort           | string  | to sort resorce collections according to one or more criteria ("sort fields")                      |
+| buildVersion   | string  | previously uploaded build version for which game modes are being requested                         |
+| platform       | string  | platform where player plays on                                                                     |
+| region         | string  | players region represented as two-letter country codes (ISO 3166)                                  |
+| sort           | string  | to sort resorce collections according to one or more criteria ("sort fields")                      |
+| titleId        | string  | title to fetch associated resources (this could have been a header as well like `X-TITLE-ID`)      |
 
 
 #### RESPONSES
@@ -323,12 +326,15 @@ __GameModeInfo__
 
 | Name           | Type    | Description                                                                                        |
 |----------------|---------|----------------------------------------------------------------------------------------------------|
-| Gamemode       | string  | specific game mode type                                                                            |
-| MaxPlayerCount | number  | maximum user count a specific Game Server Instance can support                                     |
-| MinPlayerCount | number  | minimum user count required for this Game Server Instance to continue (usually 1)                  |
-| StartOpen      | boolean | whether to start as an open session, meaning that players can matchmake into it (defaults to true) |
-| Description    | string  |                                                                                                    |
-| Created        | string  | UTC Datetime string  with timezone                                                                 |
+| name           | string  | name of the game mode                                                                              |
+| maxPlayerCount | number  | maximum user count a specific Game Server Instance can support                                     |
+| minPlayerCount | number  | minimum user count required for this Game Server Instance to continue (usually 1)                  |
+| startOpen      | boolean | whether to start as an open session, meaning that players can matchmake into it (defaults to true) |
+| description    | string  | description of the game mode                                                                       |
+| titleId        | string  | UUID that identifies the studio and game                                                           |
+| buildVersion   | string  | holds the build version of the game that the mode is associated                                    |
+
+> More fields are omitted for brevity
 
 Response contains links to `prev` and the `next` pages. 
 `prev` will be empty for the initial response and `self` contains the link that generated the current response document.
@@ -343,11 +349,11 @@ Response contains links to `prev` and the `next` pages.
     //
     "relationships": {},
     "links": {
-        "self": "/{titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&buildVersion={buildVersion}",
+        "self": "/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&titleId={titleId}&buildVersion={buildVersion}",
         "first": "link to the first document",
         "last": "link to the last document",
-        "prev": "/{titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&page[before]={before_cursor}&buildVersion={buildVersion}",
-        "next": "/{titleId}/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&page[after]={after_cursor}&buildVersion={buildVersion}"
+        "prev": "/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&page[before]={before_cursor}&titleId={titleId}&buildVersion={buildVersion}",
+        "next": "/game/v1/gamemodes?sort=rank&platform={platform}&region={region}&page[after]={after_cursor}&titleId={titleId}&buildVersion={buildVersion}"
     },
     "data": [
         {
@@ -355,12 +361,12 @@ Response contains links to `prev` and the `next` pages.
             "id": "ID_HERE",
             "attributes": {
                 "id": "ID_HERE",
-                "created": "",
                 "name": "solo",
                 "description": "Single player discovery mode",
                 "maxPlayerCount": 50,
                 "minPlayerCount": 1,
-                "startOpen": true
+                "startOpen": true,
+                "titleId": "{titleId}"
             }
         }
     ]

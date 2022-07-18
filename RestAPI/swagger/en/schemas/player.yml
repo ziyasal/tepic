@@ -14,22 +14,6 @@ properties:
       name:
         type: string
         description: "PUBG IGN"
-      shardId:
-        type: string
-        description: "platform shard"
-      stats:
-        type: object
-        description: "N/A"
-      createdAt:
-        type: string
-        format: dateTime
-        description: "N/A"
-        deprecated: true
-      updatedAt:
-        type: string
-        format: dateTime
-        description: "N/A"
-        deprecated: true
       patchVersion:
         type: string
         description: "Version of the game"
@@ -38,29 +22,14 @@ properties:
         description: "Identifies the studio and game"
   relationships:
     type: object
-    description: "References to resource objects related to this player"
+    description: "References to resource objects related to this acount"
     properties:
-      assets:
+      titlePlayerProfiles:
         type: object
         properties:
           data:
             type: object
             description: "N/A"
-      matches:
-        type: object
-        description: "A list of match ids."
-        properties:
-          data:
-            type: array
-            items:
-              type: object
-              properties:
-                id:
-                  type: string
-                  description: "Match ID - Used to lookup the full match object on the /matches endpoint"
-                type:
-                  type: string
-                  description: Identifier for this object type ("match")
   links:
     type: object
     properties:
