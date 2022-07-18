@@ -2,10 +2,10 @@ openapi: 3.0.0
 
 info:
   version: 1.0.0
-  title: ""
+  title: "Journey to become EPIC!"
 
 servers:
-  - url: https://api.pubg.com/
+  - url: https://api.journettobecomeepic.com/
   
 paths:
   /status:

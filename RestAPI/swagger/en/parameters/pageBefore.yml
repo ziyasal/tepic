@@ -1,0 +1,6 @@
+name: page[before]
+in: query
+description: "The leaderboard page to search for."
+required: false
+schema:
+  type: string

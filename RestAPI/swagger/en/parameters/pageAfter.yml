@@ -1,0 +1,6 @@
+name: page[after]
+in: query
+description: "The page get after given cursor."
+required: false
+schema:
+  type: string

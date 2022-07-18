@@ -1,0 +1,11 @@
+name: platform
+in: path
+description: "The platform to specify to search game modes for."
+required: true
+schema:
+  type: string
+  enum:
+    - "psn"
+    - "stadia"
+    - "xbox"
+    - "steam"

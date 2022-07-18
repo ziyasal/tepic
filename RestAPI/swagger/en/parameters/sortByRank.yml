@@ -1,0 +1,12 @@
+name: sort-by-rank
+in: query
+description: |
+  Sort results by rank. 
+  
+  **Usage**: sort=rank
+  
+  **Default**: created ASC
+required: false
+style: form
+schema:
+  type: string

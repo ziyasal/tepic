@@ -1,9 +1,0 @@
-name: page[number]
-in: query
-description: "The leaderboard page to search for."
-required: true
-schema:
-  type: int
-  enum:
-    - 0
-    - 1

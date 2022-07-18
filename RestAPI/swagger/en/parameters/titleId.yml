@@ -1,0 +1,6 @@
+name: titleId
+in: path
+description: "The title ID to search game modes for."
+required: true
+schema:
+  type: string

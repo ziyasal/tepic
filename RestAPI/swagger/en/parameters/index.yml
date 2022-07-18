@@ -1,17 +1,11 @@
 accountId:
   $ref: './accountId.yml'
 
-filterCreatedAt-start:
-  $ref: './filterCreatedAt-start.yml'
+sortByRank:
+  $ref: './sortByRank.yml'
 
-filterGamepad:
-  $ref: './filterGamepad.yml'
-
-filterPlayerIds:
-  $ref: './filterPlayerIds.yml'
-
-filterPlayerNames:
-  $ref: './filterPlayerNames.yml'
+filterAccountIds:
+  $ref: './filterAccountIds.yml'
 
 gameMode:
   $ref: './gameMode.yml'
@@ -19,8 +13,20 @@ gameMode:
 id:
   $ref: './id.yml'
 
-pageNumber:
-  $ref: './pageNumber.yml'
+pageBefore:
+  $ref: './pageBefore.yml'
 
-seasonId:
-  $ref: './seasonId.yml'
+pageAfter:
+  $ref: './pageAfter.yml'
+
+titleId:
+  $ref: './titleId.yml'
+
+platform:
+  $ref: './platform.yml'
+
+region:
+  $ref: './region.yml'
+
+buildVersion:
+  $ref: './buildVersion.yml'

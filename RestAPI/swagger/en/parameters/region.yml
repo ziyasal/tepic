@@ -1,0 +1,11 @@
+name: region
+in: path
+description: "The players region to specify to search game modes for."
+required: true
+schema:
+  type: string
+  enum:
+    - "de"
+    - "tr"
+    - "uk"
+    - "omitted"

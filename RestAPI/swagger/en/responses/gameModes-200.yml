@@ -1,0 +1,21 @@
+description: GameModes response
+content:
+  application/vnd.api+json:
+    schema:
+      type: object
+      properties:
+        data:
+          type: array
+          description: "An array of two or more game modes objects"
+          items:
+            $ref: '../schemas/index.yml#gameMode'
+        links:
+          type: object
+          description: "Pagination links"
+          properties:
+            self:
+              type: string
+              description: "Link to this game modes object"
+        meta:
+          type: object
+          description: "N/A"

@@ -1,11 +1,12 @@
 get:
   tags:
-  - Seasons
-  summary: Get the list of available seasons.
-  description: "Note: The list of seasons will only be changing about once every two months when a new season is added. Applications should not be querying for the list of seasons more than once per month."
+  - Accounts
+  summary: Get a single account.
+  parameters:
+    - $ref: '../parameters/index.yml#/accountId'
   responses:
     200:
-      $ref: '../responses/index.yml#/seasons-200'
+      $ref: '../responses/index.yml#/account-200'
     401:
       $ref: '../responses/index.yml#/errors/unauthorized'
     404:

@@ -1,0 +1,72 @@
+title: Player Object
+description: "Player objects contain information about a player and a list of their recent matches (up to 14 days old). Note: player objects are specific to platform shards."
+type: object
+properties:
+  type:
+    type: string
+    description: Identifier for this object type ("player")
+  id:
+    type: string
+    description: "Player ID"
+  attributes:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "journettobecomeepic IGN"
+      shardId:
+        type: string
+        description: "platform shard"
+      stats:
+        type: object
+        description: "N/A"
+      createdAt:
+        type: string
+        format: dateTime
+        description: "N/A"
+        deprecated: true
+      updatedAt:
+        type: string
+        format: dateTime
+        description: "N/A"
+        deprecated: true
+      patchVersion:
+        type: string
+        description: "Version of the game"
+      titleId:
+        type: string
+        description: "Identifies the studio and game"
+  relationships:
+    type: object
+    description: "References to resource objects related to this player"
+    properties:
+      assets:
+        type: object
+        properties:
+          data:
+            type: object
+            description: "N/A"
+      matches:
+        type: object
+        description: "A list of match ids."
+        properties:
+          data:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: "Match ID - Used to lookup the full match object on the /matches endpoint"
+                type:
+                  type: string
+                  description: Identifier for this object type ("match")
+  links:
+    type: object
+    properties:
+      schema:
+        type: string
+        description: "N/A"
+      self:
+        type: string
+        description: "Link to this object"

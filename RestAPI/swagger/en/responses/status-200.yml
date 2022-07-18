@@ -12,4 +12,4 @@ content:
               format: "status"
             id:
               type: string
-              format: "pubg-api"
+              format: "journettobecomeepic-api"

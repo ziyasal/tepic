@@ -4,8 +4,20 @@ info:
   version: 1.0.0
   title: ""
 
+# servers:
+#   - url: https://api.journettobecomeepic.com/shards/{platform}
+#     variables:
+#       "platform":
+#         enum:
+#         - "kakao"
+#         - "psn"
+#         - "stadia"
+#         - "steam"
+#         - "xbox"
+#         default: steam
+
 servers:
-  - url: https://api.pubg.com/shards/{platform}
+  - url: https://api.journettobecomeepic.com/shards/{platform}
     variables:
       "platform":
         enum:
@@ -15,15 +27,14 @@ servers:
         - "steam"
         - "xbox"
         default: steam
-
 security:
   - ApiKeyAuth: []
 
 paths:
-  /players:
+  /accounts:
     $ref: './paths/index.yml#/players'
 
-  /players/{accountId}:
+  /accounts/{accountId}:
     $ref: './paths/index.yml#/player'
 
 components:
@@ -37,5 +48,5 @@ components:
   schemas:
     player:
       $ref: 'schemas/index.yml#/player'
-    matchList:
-      $ref: 'schemas/index.yml#/matchList'
+    # gameModes:
+    #   $ref: 'schemas/index.yml#/gaemModes'

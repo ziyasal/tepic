@@ -1,18 +1,21 @@
-description: Player response
+description: Accounts response
 content:
   application/vnd.api+json:
     schema:
       type: object
       properties:
         data:
-          $ref: '../schemas/index.yml#/player'
+          type: array
+          description: "An array of two or more account objects"
+          items:
+            $ref: '../schemas/index.yml#account'
         links:
           type: object
           description: "Pagination links"
           properties:
             self:
               type: string
-              description: "Link to this player object"
+              description: "Link to this accounts object"
         meta:
           type: object
           description: "N/A"

@@ -1,0 +1,6 @@
+name: buildVersion
+in: path
+description: "The deployed build version to specify to search game modes for (follows SEMVER — semantic versioning)."
+required: true
+schema:
+  type: string

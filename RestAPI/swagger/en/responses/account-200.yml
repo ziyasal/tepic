@@ -1,20 +1,18 @@
-description: Seasons response
+description: Account response
 content:
   application/vnd.api+json:
     schema:
       type: object
       properties:
         data:
-          type: array
-          description: "An array of available seasons"
-          items:
-            $ref: '../schemas/index.yml#/season'
+          $ref: '../schemas/index.yml#/account'
         links:
           type: object
+          description: "Pagination links"
           properties:
             self:
               type: string
-              description: "Link to this seasons object"
+              description: "Link to this account object"
         meta:
           type: object
           description: "N/A"
