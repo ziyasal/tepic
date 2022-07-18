@@ -4,12 +4,12 @@ Below topics discusses design with involved components on how to scale system mi
 A few key points on how to scale:
 
 ## PERSISTENCE LAYER
-- Denormalization
+- De-normalization
   Once data becomes distributed with techniques such as federation and sharding, managing joins across data centers further increases complexity. Denormalization might circumvent the need for such complex joins.
 - SQL tuning
  * Tightening up schemas
  * Using good indices
- * Avoiding expensive joins (denormalization could help here as I explained above)
+ * Avoiding expensive joins (de-normalization could help here as I explained above)
  * Partitioning tables
  * Tuning the query cache
 
