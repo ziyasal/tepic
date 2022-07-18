@@ -1,11 +1,11 @@
-name: filter[playerIds]
+name: filter[accountIds]
 in: query
 description: |
-  Filters by player IDs.
+  Filters by Account IDs.
   
-  **Usage**: filter[playerIds]=playerId-1,playerId-2,…
+  **Usage**: filter[accountIds]=accountId-1,accountId-2,…
 required: false
-example: "account.c0e530e9b7244b358def282782f893af"
+example: "UUID-SAMPLE-ID"
 style: form
 schema:
   type: string

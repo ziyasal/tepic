@@ -80,12 +80,27 @@ Users need to specify in the headers that we accept content in the format that t
 
 Example content type string:  `Accept: application/vnd.api+json`
 
-### PAGINATION OPTIONS
- -  Offset pagination
- -  Cursor pagination
-    There are 4 types of links in the paged response: `prev`, `next`, `first`, and `last`. `prev` and 
+### RESPONSES
+All server responses will be in [JSON-API](https://jsonapi.org/format/) format and contain a root JSON object.
 
- ℹ️ I would go with cursor based since its enables to get accurate pages and avoid cases like "if an item from a prior page is deleted while the client is paginating, all subsequent results will be shifted forward by one".
+Each response will contain at least one of the following top-level members:
+
+- `data` : the response’s “primary data”
+- `errors` : an array of error objects
+
+A response may contain any of these top-level members:
+
+- `links`: a links object related to the primary data.
+- `included`: an array of resource objects that are related to the primary data and/or each other (“included resources”).
+- `meta`: only `page` information included like `per-page`, `from` cursor, `to` cursor and `has-more`.
+
+If a document does not contain a top-level data key, the included array will not be present either.
+
+### PAGINATION OPTIONS
+
+ ℹ️ I prefer to go with cursor based since its enables to get accurate pages and avoid cases like "if an item from a prior page is deleted while the client is paginating, all subsequent results will be shifted forward by one".
+
+There may be 4 types of links in the paged response depends on response payload: `prev`, `next`, `first`, and `last`.
 
 ### REQUEST HEADERS
 | Name            | Required | Type   | Description                                           |
@@ -95,6 +110,12 @@ Example content type string:  `Accept: application/vnd.api+json`
 | Accept-Encoding | false    | string | Specifies how server will compress responses, ie gzip |  
 
 ### ACCOUNT INFORMATION
+
+In the design below, users have one account and multiple `Title Player Profile`s, which enables them to have specific profiles with various settings for each title. 
+
+Since we define the above relationship, while fetching an account, we could request to include title player profiles in the response payload as a compound document. In the `Title Player Profile`,  some profile information like `current game mode` for specific title would be returned (please see an example response payload below).
+
+This way users' combined account details together with profiles when needed could be fetched.
 
 __Option 1) Filtering accounts by Account IDs:__
 ```
@@ -136,8 +157,8 @@ __AccountInfo__
 | preferredLanguage | string   | Usee's preferred language                                                                          |
 | countryCode       | string   | two-letter country codes (ISO 3166)                                                                |
 | continentCode     | string   | two-letter continent code                                                                          |
-| created           | string   | UTC Datetime string  with timezone                                                                 |
-| linkedAccounts    | []       | omitted                                                                                            |
+| created           | string   | UTC (Coordinated Universal Time) datetime                                                          |
+| linkedAccounts    | []       | "omitted"                                                                                          |
 
 
 
@@ -150,13 +171,12 @@ __TitlePlayerProfile__
 | Name              | Type    | Description                                                                                        |
 |-------------------|---------|----------------------------------------------------------------------------------------------------|
 | id                | string  | Universally Unique Identifier (UUID)                                                               |
-| titleId           | string  | User's name shown on the UI                                                                        |
-| currentGameMode   | string  | Usee's preferred language                                                                          |
-
+| titleId           | string  | The title that the profile is associated                                                           |
+| currentGameMode   | string  | The current game mode for the title that the profile is associated                                 |
 
 __Response for "Option 1 — Filtering accounts by Account IDs":__
 
-For a single account example response document looks like below:
+Response is a “compound document” which includes titlePlayerProfile in the response as well, the response payload document for a single account looks like below:
 
 ```json
 {
@@ -168,7 +188,6 @@ For a single account example response document looks like below:
             "has-more": false
         }
     },
-    "relationships": {},
     "links": {
         "first": "/id/v1/accounts?filter[accountIds]={accountId}",
         "prev": "/id/v1/accounts?filter[accountIds]={accountId}&page[before]={before_cursor}",
@@ -219,7 +238,9 @@ For a single account example response document looks like below:
 ```
 
 __Response for "Option 2" — Getting account by Account ID:__
-Response is a “compound document” which includes playrProfile in the response as well:
+
+Response is a “compound document” which includes titlePlayerProfile in the response as well,  the response payload document for a single account looks like below:
+
 ```json
 {
     "links": {
