@@ -139,7 +139,7 @@ Please see below for details of both options:
 # It enables fetching multiple accounts if accountIds passed as comma separated
 # Page size parameter "page[size]=20" is optional, it uses default page size set on the server if not specified
 
-POST  /id/v1/accounts?filter[accountIds]={accountId} HTTP/1.1
+POST  /id/v1/accounts?filter[accountIds]={accountId}&include=titlePlayerProfiles HTTP/1.1
 HOST api.epic-journey.com
 Accept: application/vnd.api+json
 Authorization: Bearer $API_KEY_HERE
@@ -147,9 +147,10 @@ Authorization: Bearer $API_KEY_HERE
 
 ##### REQUEST PARAMETERS
 
-| Name           | Type    | Description                                                                                        |
-|----------------|---------|----------------------------------------------------------------------------------------------------|
-| buildVersion   | string  | previously uploaded build version for which game modes are being requested                         |
+| Name                | Type    | Description                                              |
+|---------------------|---------|----------------------------------------------------------|
+| filter[accountIIds] | string  | comma separated accountIds to fetch                      |
+| include             | string  | comma separated relationships of the resource to include |
 
 ##### EXAMPLE JSON RESPONSE
 
@@ -167,8 +168,8 @@ Response is a “compound document” which includes `titlePlayerProfile` in the
         }
     },
     "links": {
-        "first": "/id/v1/accounts?filter[accountIds]={accountId}",
-        "prev": "/id/v1/accounts?filter[accountIds]={accountId}&page[before]={before_cursor}",
+        "first": "/id/v1/accounts?filter[accountIds]={accountId}?include=titlePlayerProfiles",
+        "prev": "/id/v1/accounts?filter[accountIds]={accountId}?include=titlePlayerProfiles&page[before]={before_cursor}",
         "next": "",
     },
     "data": [
@@ -220,7 +221,7 @@ Response is a “compound document” which includes `titlePlayerProfile` in the
 #### OPTION 2 — Getting account by an Account ID
 
 ```
-POST  /id/v1/accounts/{accountId} HTTP/1.1
+POST  /id/v1/accounts/{accountId}?include=titlePlayerProfiles HTTP/1.1
 HOST api.epic-journey.com
 Accept: application/vnd.api+json
 Authorization: Bearer $API_KEY_HERE
@@ -229,9 +230,10 @@ Authorization: Bearer $API_KEY_HERE
 
 ##### REQUEST PARAMETERS
 
-| Name           | Type    | Description                                                                                        |
-|----------------|---------|----------------------------------------------------------------------------------------------------|
-| buildVersion   | string  | previously uploaded build version for which game modes are being requested                         |
+| Name             | Type    | Description                                              |
+|------------------|---------|----------------------------------------------------------|
+| accountId]       | string  | ID of account to fetch                                   |
+| include          | string  | comma separated relationships of the resource to include |
 
 
 ##### EXAMPLE JSON RESPONSE
