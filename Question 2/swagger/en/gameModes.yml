@@ -5,7 +5,8 @@ info:
   title: "List Game modes on player's region"
 
 servers:
-  - url: https://api.epic-journey.com/game/v1/{titleId}/{platform_OR_platform-region}/gameModes
+    # URL could be if we combine "platform" and "region" together: https://api.epic-journey.com/game/v1/{titleId}/{platform+region}/gameModes
+  - url: https://api.epic-journey.com/game/v1/{titleId}/{platform}/{region}/gameModes
     variables:
       titleId:
         default: "epic-journey-id"

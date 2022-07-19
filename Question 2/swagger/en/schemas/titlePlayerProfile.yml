@@ -25,7 +25,7 @@ properties:
 
       buildVersion:
         type: string
-        description: "Previously uploaded build version for which game modes of the title is being requested"
+        description: "Build version for which game modes of the title is being requested"
   
   links:
     type: object

@@ -232,7 +232,7 @@ Authorization: Bearer $API_KEY_HERE
 
 | Name             | Type    | Description                                              |
 |------------------|---------|----------------------------------------------------------|
-| accountId]       | string  | ID of account to fetch                                   |
+| accountId        | string  | ID of account to fetch                                   |
 | include          | string  | comma separated relationships of the resource to include |
 
 
@@ -312,7 +312,7 @@ Authorization: Bearer $API_KEY_HERE
 | region         | string  | players region represented as two-letter country codes (ISO 3166)                                  |
 | titleId        | string  | title to fetch associated resources (this could have been a header as well like `X-TITLE-ID`)      |
 | sort           | string  | to sort resource collections according to one or more criteria ("sort fields")                     |
-| buildVersion   | string  | previously uploaded build version for which game modes are being requested                         |
+| buildVersion   | string  | build version for which game modes are being requested                                             |
 
 
 
@@ -329,7 +329,7 @@ __GameModeInfo__
 | maxPlayerCount | number  | maximum user count a specific Game Server Instance can support                                      |
 | minPlayerCount | number  | minimum user count required for this Game Server Instance to continue (usually 1)                   |
 | startOpen      | boolean | whether to start as an open session, meaning that players can match-make into it (defaults to true) |
-| description    | string  | description of the game mode                                                                        |
+| description    | string  | Short description of the game mode                                                                  |
 | titleId        | string  | UUID that identifies the studio and game                                                            |
 | buildVersion   | string  | holds the build version of the game that the mode is associated                                     |
 

@@ -7,6 +7,4 @@ schema:
   enum:
     - "eu"
     - "de"
-    - "tr"
-    - "uk"
     - "omitted"

@@ -1,5 +1,5 @@
 title: Account Object
-description: "Account objects contain information about a player and a list of their recent matches (up to 14 days old). Note: player objects are specific to platform shards."
+description: "Account objects contain information about a user. Note: titlePlayerProfiles could fetched by including then in the query: `include=titlePlayerProfiles`"
 type: object
 
 properties:
@@ -8,20 +8,26 @@ properties:
     description: Identifier for this object type ("player")
   id:
     type: string
-    description: "Player ID"
-  
+    description: "Account ID"
+
   attributes:
     type: object
     properties:
-      name:
+      displayName:
         type: string
-        description: "Name of the Player"
-      buildVersion:
+        description: "User's name shown on the UI "
+      preferredLanguage:
         type: string
-        description: "Version of the game"
-      titleId:
+        description: "User's preferred language"
+      countryCode:
         type: string
-        description: "Identifies the studio and game"
+        description: "Two-letter country codes (ISO 3166)"
+      continentCode:
+        type: string
+        description: "Two-letter continent code"
+      linkedAccounts:
+        type: string
+        description: "Linked accounts (included for only demo purpose)"
   
   relationships:
     type: object
@@ -43,10 +49,3 @@ properties:
       self:
         type: string
         description: "Link to this object"
-
-  included:
-    properties:
-      type: array
-      description: "N/A"
-      items:
-        $ref: '../schemas/index.yml#/titlePlayerProfile'

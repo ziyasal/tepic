@@ -3,9 +3,11 @@ get:
   - Accounts
   summary: Get a collection of up to 10 accounts.
   description: "Note: filter[accountIds] must be specified"
+  
   parameters:
     - $ref: '../parameters/index.yml#/filterAccountIds'
     - $ref: '../parameters/index.yml#/includeTitlePlayerProfiles'
+  
   responses:
     200:
       $ref: '../responses/index.yml#/accounts-200'

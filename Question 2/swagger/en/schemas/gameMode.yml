@@ -1,5 +1,5 @@
 title: Game Mode Object
-description: "Game Mode objects contain information about a game mode. Note: game mode objects are specific to platform and region shards."
+description: "Game Mode objects contain information about a game mode. Note: game mode objects are specific to user's region (or could be platform+region)"
 type: object
 properties:
   type:
@@ -14,29 +14,30 @@ properties:
       name:
         type: string
         description: "Name of game mode"
+      
       description:
         type: string
-        description: "desc"
+        description: "Short description of the game mode"
       
       maxPlayerCount:
-        type: string
-        description: ""
+        type: number
+        description: "Maximum user count a specific Game Server Instance can support "
       
       minPlayerCount:
         type: number
-        description: "Identifies the studio and game"
+        description: "Minimum user count required for this Game Server Instance to continue (usually 1)"
       
       startOpen:
-        type: string
-        description: "Identifies the studio and game"
+        type: boolean
+        description: "Whether to start as an open session, meaning that players can match-make into it (defaults to true)"
 
       titleId:
         type: string
-        description: "Identifies the studio and game"
+        description: "ID that identifies the studio and game"
         
       buildVersion:
         type: string
-        description: ""
+        description: "Build version for which game modes are being requested"
 
   links:
     type: object
