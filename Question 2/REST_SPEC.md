@@ -139,7 +139,7 @@ Please see below for details of both options:
 # It enables fetching multiple accounts if accountIds passed as comma separated
 # Page size parameter "page[size]=20" is optional, it uses default page size set on the server if not specified
 
-POST  /id/v1/accounts?filter[accountIds]={accountId}&include=titlePlayerProfiles HTTP/1.1
+GET  /id/v1/accounts?filter[accountIds]={accountId}&include=titlePlayerProfiles HTTP/1.1
 HOST api.epic-journey.com
 Accept: application/vnd.api+json
 Authorization: Bearer $API_KEY_HERE
@@ -221,7 +221,7 @@ Response is a “compound document” which includes `titlePlayerProfile` in the
 #### OPTION 2 — Getting account by an Account ID
 
 ```
-POST  /id/v1/accounts/{accountId}?include=titlePlayerProfiles HTTP/1.1
+GET /id/v1/accounts/{accountId}?include=titlePlayerProfiles HTTP/1.1
 HOST api.epic-journey.com
 Accept: application/vnd.api+json
 Authorization: Bearer $API_KEY_HERE
