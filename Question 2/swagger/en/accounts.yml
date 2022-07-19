@@ -4,38 +4,18 @@ info:
   version: 1.0.0
   title: ""
 
-# servers:
-#   - url: https://api.journettobecomeepic.com/shards/{platform}
-#     variables:
-#       "platform":
-#         enum:
-#         - "kakao"
-#         - "psn"
-#         - "stadia"
-#         - "steam"
-#         - "xbox"
-#         default: steam
-
 servers:
-  - url: https://api.journettobecomeepic.com/shards/{platform}
-    variables:
-      "platform":
-        enum:
-        - "kakao"
-        - "psn"
-        - "stadia"
-        - "steam"
-        - "xbox"
-        default: steam
+  - url: https://api.epic-journey.com/id/v1/
+
 security:
   - ApiKeyAuth: []
 
 paths:
   /accounts:
-    $ref: './paths/index.yml#/players'
+    $ref: './paths/index.yml#/accounts'
 
   /accounts/{accountId}:
-    $ref: './paths/index.yml#/player'
+    $ref: './paths/index.yml#/account'
 
 components:
   securitySchemes:
@@ -46,7 +26,5 @@ components:
       bearerFormat: JWT
 
   schemas:
-    player:
-      $ref: 'schemas/index.yml#/player'
-    # gameModes:
-    #   $ref: 'schemas/index.yml#/gaemModes'
+    account:
+      $ref: 'schemas/index.yml#/account'

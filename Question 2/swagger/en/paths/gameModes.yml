@@ -3,12 +3,14 @@ get:
   - Game Modes
   summary: Get a collection of up to 10 game modes.
   description: "N/A"
+  
   parameters:
-    - $ref: '../parameters/index.yml#/accountId'
     - $ref: '../parameters/index.yml#/platform'
     - $ref: '../parameters/index.yml#/region'
-    - $ref: '../parameters/index.yml#/buildVersion'
     - $ref: '../parameters/index.yml#/titleId'
+    - $ref: '../parameters/index.yml#/buildVersion'
+    - $ref: '../parameters/index.yml#/sortByPopularity'
+  
   responses:
     200:
       $ref: '../responses/index.yml#/gameModes-200'

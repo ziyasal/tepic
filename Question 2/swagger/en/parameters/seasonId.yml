@@ -1,6 +1,0 @@
-name: seasonId
-in: path
-description: "The season ID to search for."
-required: true
-schema:
-  type: string

@@ -1,6 +1,7 @@
-title: Player Object
-description: "Player objects contain information about a player and a list of their recent matches (up to 14 days old). Note: player objects are specific to platform shards."
+title: Account Object
+description: "Account objects contain information about a player and a list of their recent matches (up to 14 days old). Note: player objects are specific to platform shards."
 type: object
+
 properties:
   type:
     type: string
@@ -8,21 +9,23 @@ properties:
   id:
     type: string
     description: "Player ID"
+  
   attributes:
     type: object
     properties:
       name:
         type: string
-        description: "PUBG IGN"
-      patchVersion:
+        description: "Name of the Player"
+      buildVersion:
         type: string
         description: "Version of the game"
       titleId:
         type: string
         description: "Identifies the studio and game"
+  
   relationships:
     type: object
-    description: "References to resource objects related to this acount"
+    description: "References to resource objects related to this account"
     properties:
       titlePlayerProfiles:
         type: object
@@ -30,6 +33,7 @@ properties:
           data:
             type: object
             description: "N/A"
+  
   links:
     type: object
     properties:
@@ -39,3 +43,10 @@ properties:
       self:
         type: string
         description: "Link to this object"
+
+  included:
+    properties:
+      type: array
+      description: "N/A"
+      items:
+        $ref: '../schemas/index.yml#/titlePlayerProfile'

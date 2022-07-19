@@ -1,17 +1,15 @@
+
 accountId:
   $ref: './accountId.yml'
 
-sortByRank:
-  $ref: './sortByRank.yml'
+sortByPopularity:
+  $ref: './sortByPopularity.yml'
 
 filterAccountIds:
   $ref: './filterAccountIds.yml'
 
-gameMode:
-  $ref: './gameMode.yml'
-
-id:
-  $ref: './id.yml'
+includeTitlePlayerProfiles:
+  $ref: './includeTitlePlayerProfiles.yml'
 
 pageBefore:
   $ref: './pageBefore.yml'

@@ -2,18 +2,25 @@ openapi: 3.0.0
 
 info:
   version: 1.0.0
-  title: "List Game modes on players region"
+  title: "List Game modes on player's region"
 
 servers:
-  - url: https://api.journettobecomeepic.com
+  - url: https://api.epic-journey.com/game/v1/{titleId}/{platform_OR_platform-region}/gameModes
     variables:
-      "platform":
+      titleId:
+        default: "epic-journey-id"
+        description: "N/A"
+      platform:
+       enum:
+       - "psn"
+       - "xbox"
+       default: psn
+      region:
         enum:
-        - "psn"
-        - "stadia"
-        - "steam"
-        - "xbox"
-        default: psn
+        - "eu"
+        - "as"
+        default: eu
+
 security:
   - ApiKeyAuth: []
 

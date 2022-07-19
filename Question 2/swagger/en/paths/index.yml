@@ -1,9 +1,14 @@
 
-player: 
+
+status:
+  $ref: './status.yml'
+  
+account: 
   $ref: './account.yml'
 
-players: 
+accounts: 
   $ref: './accounts.yml'
 
 gameModes:
   $ref: './gameModes.yml'
+

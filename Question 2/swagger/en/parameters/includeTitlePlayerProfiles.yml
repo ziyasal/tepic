@@ -1,0 +1,11 @@
+name: include
+in: query
+description: |
+  Include titlePlayerProfiles relationship of the resource
+  
+  **Usage**: include=titlePlayerProfiles
+required: false
+example: "include=titlePlayerProfiles"
+style: form
+schema:
+  type: string

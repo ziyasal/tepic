@@ -1,9 +1,9 @@
-name: sort-by-rank
+name: sort-by-popularity
 in: query
 description: |
-  Sort results by rank. 
+  Sort results by popularity. 
   
-  **Usage**: sort=rank
+  **Usage**: sort=popularity
   
   **Default**: created ASC
 required: false

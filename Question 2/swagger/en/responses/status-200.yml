@@ -12,4 +12,4 @@ content:
               format: "status"
             id:
               type: string
-              format: "journettobecomeepic-api"
+              format: "epic-journey-api"

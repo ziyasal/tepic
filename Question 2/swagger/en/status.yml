@@ -2,10 +2,10 @@ openapi: 3.0.0
 
 info:
   version: 1.0.0
-  title: "Journey to become EPIC!"
+  title: "EPIC Journey!"
 
 servers:
-  - url: https://api.journettobecomeepic.com/
+  - url: https://api.epic-journey.com/
   
 paths:
   /status:

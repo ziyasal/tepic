@@ -5,6 +5,7 @@ get:
   description: "Note: filter[accountIds] must be specified"
   parameters:
     - $ref: '../parameters/index.yml#/filterAccountIds'
+    - $ref: '../parameters/index.yml#/includeTitlePlayerProfiles'
   responses:
     200:
       $ref: '../responses/index.yml#/accounts-200'

@@ -2,8 +2,11 @@ get:
   tags:
   - Accounts
   summary: Get a single account.
+  
   parameters:
     - $ref: '../parameters/index.yml#/accountId'
+    - $ref: '../parameters/index.yml#/includeTitlePlayerProfiles'
+  
   responses:
     200:
       $ref: '../responses/index.yml#/account-200'

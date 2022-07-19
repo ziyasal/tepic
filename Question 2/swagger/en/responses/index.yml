@@ -15,10 +15,10 @@ errors:
 status-200:
   $ref: './status-200.yml'
 
-player-200:
+account-200:
   $ref: './account-200.yml'
 
-players-200:
+accounts-200:
   $ref: './accounts-200.yml'
 
 gameModes-200:

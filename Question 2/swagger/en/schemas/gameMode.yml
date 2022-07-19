@@ -14,12 +14,30 @@ properties:
       name:
         type: string
         description: "Name of game mode"
-      buildVersion:
+      description:
         type: string
-        description: "Version of the game"
+        description: "desc"
+      
+      maxPlayerCount:
+        type: string
+        description: ""
+      
+      minPlayerCount:
+        type: number
+        description: "Identifies the studio and game"
+      
+      startOpen:
+        type: string
+        description: "Identifies the studio and game"
+
       titleId:
         type: string
         description: "Identifies the studio and game"
+        
+      buildVersion:
+        type: string
+        description: ""
+
   links:
     type: object
     properties:

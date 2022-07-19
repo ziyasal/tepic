@@ -22,7 +22,7 @@ The API is designed to implement the required features of the JSON-API specifica
                 - [REQUEST PARAMETERS](#request-parameters)
                 - [EXAMPLE JSON RESPONSE](#example-json-response)
     - [GAME MODES API](#game-modes-api)
-        - [REQUEST PARAMETERS](#request-parameters)
+        - [REQUEST PATH AND QUERY PARAMETERS](#request-path-and-query-parameters)
         - [RESPONSES](#responses)
     - [ERROR CASES](#error-cases)
 
@@ -298,21 +298,22 @@ An API to query the game modes for the region in which the player is located, li
 # To sort in descending order "sort=-rank" could be passed, without minus (U+002D HYPHEN-MINUS "-") sort happens in ascending order
 # Page size parameter "page[size]=20" is optional, it uses default page size set on the server if not specified
 
-GET /game/v1/gameModes?sort=rank&platform={platform}&region={region}&titleId={titleId}&buildVersion={buildVersion}
+GET /game/v1/{titleId}/{platform or platform-region}/gameModes?sort=rank&buildVersion={buildVersion}
 Host: api.epic-journey.com
 Accept: application/vnd.api+json
 Authorization: Bearer $API_KEY_HERE
 ```
 
-### REQUEST PARAMETERS
+### REQUEST PATH AND QUERY PARAMETERS
 
 | Name           | Type    | Description                                                                                        |
 |----------------|---------|----------------------------------------------------------------------------------------------------|
-| buildVersion   | string  | previously uploaded build version for which game modes are being requested                         |
 | platform       | string  | platform where player plays on                                                                     |
 | region         | string  | players region represented as two-letter country codes (ISO 3166)                                  |
-| sort           | string  | to sort resource collections according to one or more criteria ("sort fields")                     |
 | titleId        | string  | title to fetch associated resources (this could have been a header as well like `X-TITLE-ID`)      |
+| sort           | string  | to sort resource collections according to one or more criteria ("sort fields")                     |
+| buildVersion   | string  | previously uploaded build version for which game modes are being requested                         |
+
 
 
 ### RESPONSES
@@ -349,25 +350,24 @@ Response contains links to `prev` and the `next` pages.
         }
     },
     "links": {
-        "self": "/game/v1/gameModes?sort=rank&platform={platform}&region={region}&titleId={titleId}&buildVersion={buildVersion}",
+        "self": "/game/v1/{titleId}/{platform or platform-region}/gameModes?sort=popularity&buildVersion={buildVersion}",
         "first": "link to the first page",
         "last": "link to the last page",
-        "prev": "/game/v1/gameModes?sort=rank&platform={platform}&region={region}&page[before]={before_cursor}&titleId={titleId}&buildVersion={buildVersion}",
-        "next": "/game/v1/gameModes?sort=rank&platform={platform}&region={region}&page[after]={after_cursor}&titleId={titleId}&buildVersion={buildVersion}"
+        "prev": "/game/v1/{titleId}/{platform or platform-region}/gameModes?sort=popularity&buildVersion={buildVersion}",
+        "next": "/game/v1/{titleId}/{platform or platform-region}/gameModes?sort=popularity&page[after]={after_cursor}&buildVersion={buildVersion}"
     },
     "data": [
         {
             "type": "gameMode",
             "id": "ID_HERE",
             "attributes": {
-                "id": "ID_HERE",
                 "name": "solo",
                 "description": "Single player discovery mode",
                 "maxPlayerCount": 16,
                 "minPlayerCount": 1,
                 "startOpen": true,
-                "titleId": "{titleId}"
-            }
+                "titleId": "{titleId}",
+                "buildVersion" : "{buildVersion}"
         }
     ]
 }
@@ -389,13 +389,14 @@ __Page Size:__
 }
 ```
 
-__Region:__
+
+__TitleID:__
 ```json
 {
   "errors": [{
     "title": "Invalid Parameter.",
-    "detail": "Region must be two-letter country code (ISO 3166); got USA",
-    "source": { "parameter": "region" },
+    "detail": "Title ID must be valid; got A-TITLE",
+    "source": { "path": "titleId" },
     "status": "400"
   }]
 }
@@ -407,7 +408,19 @@ __Platform:__
   "errors": [{
     "title": "Invalid Parameter.",
     "detail": "Platform must be a valid one (ie: psn, xbox, stadia, ); got USA",
-    "source": { "parameter": "platform" },
+    "source": { "path": "platform" },
+    "status": "400"
+  }]
+}
+```
+
+__Region:__
+```json
+{
+  "errors": [{
+    "title": "Invalid Parameter.",
+    "detail": "Region must be two-letter country code (ISO 3166); got USA",
+    "source": { "path": "region" },
     "status": "400"
   }]
 }
@@ -425,17 +438,6 @@ __Sort:__
 }
 ```
 
-__TitleID:__
-```json
-{
-  "errors": [{
-    "title": "Invalid Parameter.",
-    "detail": "Title ID must be valid; got A-TITLE",
-    "source": { "parameter": "titleId" },
-    "status": "400"
-  }]
-}
-```
 
 __BuildVersion:__
 ```json

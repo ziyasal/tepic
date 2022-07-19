@@ -1,6 +1,9 @@
 
-player:
-  $ref: './player.yml'
+account:
+  $ref: './account.yml'
 
 gameMode:
   $ref: './gameMode.yml'
+
+titlePlayerProfile:
+  $ref: './titlePlayerProfile.yml'

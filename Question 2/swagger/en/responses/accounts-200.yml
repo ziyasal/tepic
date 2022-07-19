@@ -8,7 +8,7 @@ content:
           type: array
           description: "An array of two or more account objects"
           items:
-            $ref: '../schemas/index.yml#account'
+            $ref: '../schemas/index.yml#/account'
         links:
           type: object
           description: "Pagination links"
