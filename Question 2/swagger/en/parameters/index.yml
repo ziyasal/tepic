@@ -2,9 +2,6 @@
 accountId:
   $ref: './accountId.yml'
 
-sortByPopularity:
-  $ref: './sortByPopularity.yml'
-
 filterAccountIds:
   $ref: './filterAccountIds.yml'
 
@@ -28,3 +25,6 @@ region:
 
 buildVersion:
   $ref: './buildVersion.yml'
+
+sortByPopularity:
+  $ref: './sortByPopularity.yml'

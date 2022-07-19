@@ -5,6 +5,7 @@ required: true
 schema:
   type: string
   enum:
+    - "eu"
     - "de"
     - "tr"
     - "uk"

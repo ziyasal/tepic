@@ -1,7 +1,7 @@
 name: include
 in: query
 description: |
-  Include titlePlayerProfiles relationship of the resource
+  Include titlePlayerProfiles documents to the account response payload document as compound document
   
   **Usage**: include=titlePlayerProfiles
 required: false
